@@ -3,6 +3,7 @@ let fs = require('fs');
 
 let mapStackTrace = (stack) => {
   let parsedStack;
+  stack = stack.replace(/\n/g, ' ');
   let lines = stack.split('at ');
   let formatedStack;
 
