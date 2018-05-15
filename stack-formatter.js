@@ -31,7 +31,12 @@ let parseStack = (lines) => {
     } else {
       fields = line.match(regex);
       if (!fields) {
-        fields = [null, ...line.match(/(.*):([0-9]+):([0-9]+)/)];
+        if (line.match(/(.*):([0-9]+):([0-9]+)/)) {
+          fields = [null, ...line.match(/(.*):([0-9]+):([0-9]+)/)];
+        } else {
+          lines[0] += lines[i];
+          continue;
+        }
       }
       uri = fields[2].split('/');
       fileName = uri[uri.length-1];
@@ -95,7 +100,8 @@ let getOriginalPositions = (smc, positions, originalPositions) => {
 let tempFunc = (strings, ...values) => {
   let str = '';
   str += values[0];
-  str += '             '.slice(str.length);
+  str += ' ';
+  str += '                '.slice(str.length);
   for (let i = 1; i < values.length; i++) {
     str += values[i];
     str += strings[i+1];
